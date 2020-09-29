@@ -1,0 +1,17 @@
+FROM microsoft/dotnet:2.2-sdk AS build-env
+WORKDIR /app
+
+COPY NetCore.Docker.csproj NetCore.Docker.csproj
+
+#RUN dotnet restore NetCore.Docker.csproj
+
+COPY . ./
+
+RUN dotnet publish NetCore.Docker.csproj -o /publish
+
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
+WORKDIR /app
+COPY --from=build-env /publish .
+
+ENTRYPOINT ["dotnet", "NetCore.Docker.dll"]
+
