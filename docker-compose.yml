@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+    counter:
+        image: "counter-image"
+    # db:
+    #     image: postgres:10.4-alpine
+    #     environment:
+    #         PGDATA: /var/lib/postgresql/data/pgdata
+    #         POSTGRES_DB: hha_db
+    #         POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    db:
+        image: postgres
+        restart: always
+        environment:
+            # PGDATA: /var/lib/postgresql/data/pgdata
+            POSTGRES_DB: my_db
+            POSTGRES_USER: hha
+            POSTGRES_PASSWORD: mikael74
+        ports:
+            - 5432:5432
+        volumes:
+            - db:/var/lib/postgresql/data:rw
+    # adminer:
+    #     image: adminer
+    #     restart: always
+    #     ports:
+    #         - 8080:8080
+volumes:
+    db: {}          
